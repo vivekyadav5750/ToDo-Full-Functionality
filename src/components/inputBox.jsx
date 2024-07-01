@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { addItem } from "../redux/Todo/ToDoReducer";
 
 export default function InputBox() {
   const [todo, setTodo] = useState({ title: "", completed: false });
@@ -12,7 +13,7 @@ export default function InputBox() {
       toast.error("Please enter a todo");
       return;
     }
-    dispatch({ type: "TOGGLE_TODO/addTodo", payload: todo });
+    dispatch(addItem(todo));
     todoData.current.value = "";
     setTodo({ ...todo, title: "" });
     toast.success("Todo Added Successfully");

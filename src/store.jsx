@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { toDoReducer } from "./redux/Todo/ToDoReducer";
+import {todoReducer} from "./redux/Todo/ToDoReducer";
 import { userReducer } from "./redux/User/UserReducer";
 
 const store = configureStore({
     reducer: {
-        TOGGLE_TODO: toDoReducer,
+        todo: todoReducer,
         user: userReducer,
     },
 });

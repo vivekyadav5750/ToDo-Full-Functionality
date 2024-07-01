@@ -4,35 +4,36 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-export default function ItemCard({ index, todo }) {
+import { deleteItem, toggleTodo } from "../redux/Todo/ToDoReducer";
+
+export default function ItemCard({ todo }) {
+  // console.log("todo : ", todo);
   const [editMode, setEditMode] = useState(false);
   const [currTitle, setCurrTitle] = useState(todo.title);
 
   const dispatch = useDispatch();
 
-  const handleCompleted = (index) => {
-    dispatch({ type: "TOGGLE_TODO/changeStatus", payload: index });
+  const handleToggle = (id) => {
+    dispatch(toggleTodo(id));
   };
 
-  const handleDeleteClick = (index) => {
-    dispatch({ type: "TOGGLE_TODO/deleteTodo", payload: index });
+  const handleDeleteClick = (id) => {
+    dispatch(deleteItem(id));
     toast.error("Todo Deleted Successfully");
   };
-
-//   const handleOnChange = (e) => {
-//     setCurrTitle(e.target.value);
-//   };
 
   const handleCancelClick = () => {
     setCurrTitle(todo.title);
     setEditMode(false);
-  }
+  };
 
   const handleSaveClick = () => {
-    dispatch({ type: "TOGGLE_TODO/editTodo", payload: { index, title: currTitle } });
+    dispatch({
+      type: "TOGGLE_TODO/editTodo",
+      payload: { id: todo.id, title: currTitle },
+    });
     setEditMode(false);
-  }
-
+  };
 
   return (
     <div className="w-full h-20 bg-gray-300 flex items-center justify-between p-4 rounded-md shadow-md">
@@ -41,8 +42,7 @@ export default function ItemCard({ index, todo }) {
           <input
             value={currTitle}
             readOnly={!editMode}
-            // onChange={handleOnChange} 
-            onChange={(e) => setCurrTitle(e.target.value)} 
+            onChange={(e) => setCurrTitle(e.target.value)}
             name="title"
             className={`${
               editMode ? "border-2 " : "border-none bg-transparent"
@@ -55,7 +55,7 @@ export default function ItemCard({ index, todo }) {
           {todo.completed ? (
             <button
               className="p-2 bg-green-500 hover:bg-green-400 hover:text-black text-white rounded-md shadow-md"
-              onClick={() => handleCompleted(index)}
+              onClick={() => handleToggle(todo.id)}
             >
               Completed
             </button>
@@ -63,7 +63,7 @@ export default function ItemCard({ index, todo }) {
             <button
               className="p-2 bg-red-500 hover:bg-red-400 hover:text-black text-white
            rounded-md shadow-md"
-              onClick={() => handleCompleted(index)}
+              onClick={() => handleToggle(todo.id)}
             >
               Not Completed
             </button>
@@ -95,7 +95,7 @@ export default function ItemCard({ index, todo }) {
             <MdDeleteForever
               size={24}
               className="text-red-600 cursor-pointer"
-              onClick={() => handleDeleteClick(index)}
+              onClick={() => handleDeleteClick(todo.id)}
             />
           </div>
         )}
@@ -105,6 +105,6 @@ export default function ItemCard({ index, todo }) {
 }
 
 ItemCard.propTypes = {
-  index: PropTypes.number,
+  // id: PropTypes.number,
   todo: PropTypes.object,
 };
