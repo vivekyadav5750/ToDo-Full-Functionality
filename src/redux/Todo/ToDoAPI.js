@@ -10,18 +10,21 @@ import {
 import { db } from "../../firebaseInit";
 
 export const addItemAPI = async (item) => {
-    const docRef = doc(collection(db, "todos"));
-    await setDoc(docRef, item);
-    return { id: docRef.id, ...item };
+  const docRef = doc(collection(db, "todos"));
+  await setDoc(docRef, item);
+  return { id: docRef.id, ...item };
 };
 
 export const editItemAPI = async (id, updates) => {
-  await db.collection("todos").doc(id).update(updates);
+    console.log("editItemAPI : ", id, updates);
+    const docRef = doc(db, "todos", id);
+    await setDoc(docRef, updates, { merge: true });
+    // return { id, ...updates };
 };
 
 export const deleteItemAPI = async (id) => {
-    const docRef = doc(db,"todos",id);
-    await deleteDoc(docRef);
+  const docRef = doc(db, "todos", id);
+  await deleteDoc(docRef);
 };
 
 export const toggleItemAPI = async (id) => {
@@ -35,7 +38,7 @@ export const toggleItemAPI = async (id) => {
   } else {
     console.log("No such document!");
   }
-  console.log("Toggled");
+  console.log("Toggled : ", id);
 };
 
 export const fetchItemsAPI = async () => {

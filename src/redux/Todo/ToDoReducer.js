@@ -17,9 +17,8 @@ export const addItem = createAsyncThunk("todo/addItem", async (item) => {
   return newTodo;
 });
 
-export const editItem = createAsyncThunk(
-  "todo/editItem",
-  async ({ id, updates }) => {
+export const editItem = createAsyncThunk( "todo/editItem", async ({ id, updates }) => {
+  // console.log("editItem : ", id, updates);
     await editItemAPI(id, updates);
     return { id, updates };
   }
@@ -31,7 +30,7 @@ export const deleteItem = createAsyncThunk("todo/deleteItem", async (id) => {
 });
 
 export const toggleTodo = createAsyncThunk("todo/toggleTodo", async (id) => {
-  await toggleItemAPI(id, { completed: true });
+  await toggleItemAPI(id);
   return id;
 });
 
@@ -44,6 +43,7 @@ const toDoReducer = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch Items
       .addCase(fetchItems.pending, (state) => {
         state.loading = true;
       })
@@ -54,33 +54,32 @@ const toDoReducer = createSlice({
       .addCase(fetchItems.rejected, (state) => {
         state.loading = false;
       })
+      //ADD Item
       .addCase(addItem.fulfilled, (state, action) => {
-        console.log("Hello this is item: ", state.todos);
         return {
           ...state,
           todos: [...state.todos, action.payload],
         };
       })
+      //EDIT Item
       .addCase(editItem.fulfilled, (state, action) => {
-        const { id, updates } = action.payload;
-        const existingItem = state.items.find((item) => item.id === id);
-        if (existingItem) {
-          Object.assign(existingItem, updates);
-        }
+        // const { id, updates } = action.payload;
+        // const existingItem = state.todos.find((item) => item.id === id);
+        // if (existingItem) {
+        //   Object.assign(existingItem, updates);
+        // }
+        state.todos = state.todos.map(item => item.id === action.payload.id ? { ...item, ...action.payload.updates } : item);
+
+
       })
+      //DELETE Item
       .addCase(deleteItem.fulfilled, (state, action) => {
-        const updatedItems = state.todos.filter((item) => {
-          console.log("Yahan dekho: ", item.id, "Data:", item.title);
-          return item.id !== action.payload;
-        });
-
-        console.log("Hello this is item agian: ", state.todos);
-
         return {
           ...state,
-          todos: [...updatedItems],
+          todos: state.todos.filter((item) => item.id !== action.payload),
         };
       })
+      //TOGGLE Item
       .addCase(toggleTodo.fulfilled, (state, action) => {
         const existingItem = state.todos.find(
           (item) => item.id === action.payload
@@ -88,7 +87,6 @@ const toDoReducer = createSlice({
         if (existingItem) {
           existingItem.completed = !existingItem.completed;
         }
-        console.log(existingItem);
       });
   },
 });

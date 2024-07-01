@@ -4,7 +4,7 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-import { deleteItem, toggleTodo } from "../redux/Todo/ToDoReducer";
+import { deleteItem, editItem, toggleTodo } from "../redux/Todo/ToDoReducer";
 
 export default function ItemCard({ todo }) {
   // console.log("todo : ", todo);
@@ -28,10 +28,7 @@ export default function ItemCard({ todo }) {
   };
 
   const handleSaveClick = () => {
-    dispatch({
-      type: "TOGGLE_TODO/editTodo",
-      payload: { id: todo.id, title: currTitle },
-    });
+    dispatch(editItem({ id: todo.id, updates: { title: currTitle, completed: todo.completed } }));
     setEditMode(false);
   };
 

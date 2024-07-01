@@ -17,7 +17,6 @@ export default function NoteItem() {
   return (
     <div className="w-2/3 min-h-80 bg-gray-400 shadow-md rounded-md p-4 ">
       {todos.map((todo, index) => {
-        console.log("todo c type: ", todo);
         return <ItemCard key={index}  todo={todo} />;
       })}
     </div>
