@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -9,7 +9,7 @@ import { deleteItem, toggleTodo } from "../redux/Todo/ToDoReducer";
 export default function ItemCard({ todo }) {
   // console.log("todo : ", todo);
   const [editMode, setEditMode] = useState(false);
-  const [currTitle, setCurrTitle] = useState(todo.title);
+  const [currTitle, setCurrTitle] = useState("");
 
   const dispatch = useDispatch();
 
@@ -34,6 +34,10 @@ export default function ItemCard({ todo }) {
     });
     setEditMode(false);
   };
+
+  useEffect(() => {
+    setCurrTitle(todo.title);
+  }, [todo.title]);
 
   return (
     <div className="w-full h-20 bg-gray-300 flex items-center justify-between p-4 rounded-md shadow-md">
