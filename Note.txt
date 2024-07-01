@@ -1,0 +1,2 @@
+If we use realTimeUpdate, then no use to manage state (CRUD operation),
+All operation will done automatically , as data update in Db

@@ -7,7 +7,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../../firebaseInit";
+import { db } from "../../Config/firebaseInit";
 
 export const addItemAPI = async (item) => {
   const docRef = doc(collection(db, "todos"));

@@ -41,54 +41,54 @@ const toDoReducer = createSlice({
     loading: false,
   },
   reducers: {},
-  extraReducers: (builder) => {
-    builder
-      // Fetch Items
-      .addCase(fetchItems.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchItems.fulfilled, (state, action) => {
-        state.todos = [...action.payload];
-        state.loading = false;
-      })
-      .addCase(fetchItems.rejected, (state) => {
-        state.loading = false;
-      })
-      //ADD Item
-      .addCase(addItem.fulfilled, (state, action) => {
-        return {
-          ...state,
-          todos: [...state.todos, action.payload],
-        };
-      })
-      //EDIT Item
-      .addCase(editItem.fulfilled, (state, action) => {
-        // const { id, updates } = action.payload;
-        // const existingItem = state.todos.find((item) => item.id === id);
-        // if (existingItem) {
-        //   Object.assign(existingItem, updates);
-        // }
-        state.todos = state.todos.map(item => item.id === action.payload.id ? { ...item, ...action.payload.updates } : item);
+  // extraReducers: (builder) => {
+  //   builder
+  //     // Fetch Items
+  //     .addCase(fetchItems.pending, (state) => {
+  //       state.loading = true;
+  //     })
+  //     .addCase(fetchItems.fulfilled, (state, action) => {
+  //       state.todos = [...action.payload];
+  //       state.loading = false;
+  //     })
+  //     .addCase(fetchItems.rejected, (state) => {
+  //       state.loading = false;
+  //     })
+  //     //ADD Item
+  //     .addCase(addItem.fulfilled, (state, action) => {
+  //       return {
+  //         ...state,
+  //         todos: [...state.todos, action.payload],
+  //       };
+  //     })
+  //     //EDIT Item
+  //     .addCase(editItem.fulfilled, (state, action) => {
+  //       // const { id, updates } = action.payload;
+  //       // const existingItem = state.todos.find((item) => item.id === id);
+  //       // if (existingItem) {
+  //       //   Object.assign(existingItem, updates);
+  //       // }
+  //       state.todos = state.todos.map(item => item.id === action.payload.id ? { ...item, ...action.payload.updates } : item);
 
 
-      })
-      //DELETE Item
-      .addCase(deleteItem.fulfilled, (state, action) => {
-        return {
-          ...state,
-          todos: state.todos.filter((item) => item.id !== action.payload),
-        };
-      })
-      //TOGGLE Item
-      .addCase(toggleTodo.fulfilled, (state, action) => {
-        const existingItem = state.todos.find(
-          (item) => item.id === action.payload
-        );
-        if (existingItem) {
-          existingItem.completed = !existingItem.completed;
-        }
-      });
-  },
+  //     })
+  //     //DELETE Item
+  //     .addCase(deleteItem.fulfilled, (state, action) => {
+  //       return {
+  //         ...state,
+  //         todos: state.todos.filter((item) => item.id !== action.payload),
+  //       };
+  //     })
+  //     //TOGGLE Item
+  //     .addCase(toggleTodo.fulfilled, (state, action) => {
+  //       const existingItem = state.todos.find(
+  //         (item) => item.id === action.payload
+  //       );
+  //       if (existingItem) {
+  //         existingItem.completed = !existingItem.completed;
+  //       }
+  //     });
+  // },
 });
 
 export const todoReducer = toDoReducer.reducer;

@@ -1,12 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ItemCard from "./itemCard";
 import { fetchItems } from "../redux/Todo/ToDoReducer";
 import { useEffect } from "react";
+import useFirestore from "../hooks/useFirestore";
 
 export default function NoteItem() {
-  const { todos } = useSelector(state => state.todo);
-  // console.log("todos : ", todos);
+  // const { todos } = useSelector(state => state.todo);
   const dispatch = useDispatch();
+
+  const { docs: todos } = useFirestore("todos");
+  console.log("docs : ", todos);
 
   useEffect(() => {
     console.log("fetchItems");
