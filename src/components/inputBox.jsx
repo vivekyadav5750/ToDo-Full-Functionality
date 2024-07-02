@@ -20,7 +20,7 @@ export default function InputBox() {
   };
 
   return (
-    <div className="w-3/5   h-32 ">
+    <div className=" w-3/5   h-32 ">
       <div className="w-10/12 flex flex-col space-y-4 ">
         <input
           className="w-full border-2 h-12 rounded-md"

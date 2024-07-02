@@ -11,6 +11,7 @@ import { db } from "../../Config/firebaseInit";
 
 export const addItemAPI = async (item) => {
   const docRef = doc(collection(db, "todos"));
+  item = { ...item, Date: new Date().toISOString()};
   await setDoc(docRef, item);
   return { id: docRef.id, ...item };
 };
