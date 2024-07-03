@@ -1,17 +1,37 @@
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { userLogin, userSelection } from "../redux/User/UserReducer";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 export default function LoginCard() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, error } = useSelector(userSelection);
+  console.log("Login User : ", user, "Login Error : ", error);
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const Loginuser = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        console.log("Login Form Submitted");
-        console.log( email, password);
-      }
+    dispatch(userLogin(Loginuser));  
+  };
 
-    return (
-        <main className="flex items-center justify-center">
+  //useEffect for toast first attempt or changes in data
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success(`Login Successfully `);
+      navigate("/");
+    } 
+  } , [user, error,navigate] );
+
+  return (
+    <main className="flex items-center justify-center">
       {/* // login form */}
       <div className="h-96 w-80 mt-20   space-y-4">
         <h1 className="text-5xl font-serif font-black text-customBlue">
@@ -49,5 +69,5 @@ export default function LoginCard() {
         </p>
       </div>
     </main>
-    )
+  );
 }

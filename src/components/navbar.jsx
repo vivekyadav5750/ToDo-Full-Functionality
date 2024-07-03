@@ -1,32 +1,24 @@
 /* eslint-disable react/prop-types */
-// import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { VscSignIn, VscSignOut } from "react-icons/vsc";
-import { GiShoppingCart } from "react-icons/gi";
-import { BsHandbag } from "react-icons/bs";
-// import { toast } from "react-toastify";
-// import userContext from "../context/user/userContext";
-// import authService from "../services/authSevices";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout, userSelection } from "../redux/User/UserReducer";
 
 export default function Navbar() {
-  //   const { user } = useContext(userContext);
-  let user = null;
-  //   const handleLogout = async () => {
-  //     const { error } = authService.logout();
+  const { user } = useSelector(userSelection);
+  const dispatch = useDispatch();
 
-  //     if (error) {
-  //       toast.error("Logout failed!!");
-  //       return;
-  //     }
-  //   };
+  const handleLogout = async () => {
+    dispatch(userLogout());
+  };
 
   return (
     <>
       <nav className="h-20 bg-gray-200 flex px-4 items-center justify-between font-mono pb-4  ">
         <NavLink to="/" className="flex ">
           <h1 className="text-2xl text-customPurple font ml-12 cursor-pointer">
-           ToDos
+            ToDos
           </h1>
           {user && (
             <h1 className="text-xl text-orange-500 font ml-12 cursor-pointer">
@@ -43,24 +35,6 @@ export default function Navbar() {
             </li>
           </NavLink>
 
-          {user && (
-            <NavLink to="/myorder">
-              <li className="flex space-x-2 hover:bg-white hover:text-orange-600  rounded-md cursor-pointer">
-                <BsHandbag size={24} className="text-orange-800 " />
-                <span className="text-xl text-customPurple"> My orders</span>
-              </li>
-            </NavLink>
-          )}
-
-          {user && (
-            <NavLink to="/cart">
-              <li className="flex space-x-2 hover:bg-white hover:text-orange-600  rounded-md cursor-pointer">
-                <GiShoppingCart size={25} className="text-orange-800 " />
-                <span className="text-xl text-customPurple"> Cart</span>
-              </li>
-            </NavLink>
-          )}
-
           {!user && (
             <NavLink to="/signIn">
               <li className="flex space-x-2  hover:bg-white hover:text-orange-600  rounded-md cursor-pointer">
@@ -73,7 +47,7 @@ export default function Navbar() {
           {user && (
             <NavLink to="/signIn">
               <li
-                // onClick={handleLogout}
+                onClick={handleLogout}
                 className="flex space-x-2  hover:bg-white hover:text-orange-600  rounded-md cursor-pointer"
               >
                 <VscSignOut size={24} className="text-red-700" />
