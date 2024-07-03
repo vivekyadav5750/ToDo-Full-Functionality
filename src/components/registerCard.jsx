@@ -3,6 +3,7 @@ import { userRegister, userSelection } from "../redux/User/UserReducer";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import GoogleSignIn from "./google-sign-in";
 
 export default function RegisterCard() {
   const navigate = useNavigate();
@@ -75,7 +76,11 @@ export default function RegisterCard() {
             Sign Up
           </button>
         </form>
+
+          <GoogleSignIn />
+
       </div>
+
     </main>
   );
 }

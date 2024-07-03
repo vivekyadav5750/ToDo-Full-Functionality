@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginAPI, logoutAPI, registerAPI } from "../../hooks/UserAPI";
+import { googleLoginAPI, loginAPI, logoutAPI, registerAPI } from "../../hooks/UserAPI";
 
 const initialState = {
   user: null,
@@ -31,15 +31,18 @@ export const userLogout = createAsyncThunk("user/logout", async () => {
   return { userCred, error: true };
 });
 
+export const googleLogin = createAsyncThunk("user/googleLogin", async () => {
+  const { userCred, error } = await googleLoginAPI();
+  if (error) {
+    return { user: null, error };
+  }
+  return { userCred, error: null };
+});
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // logout
-    logout: (state) => {
-      state.user = null;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,11 +64,16 @@ const userSlice = createSlice({
       state.user = action.payload.userCred;
       state.error = action.payload.error;
       console.log("State User :  ", state.user, "State Error : ", state.error);
+    })
+    .addCase(googleLogin.fulfilled, (state, action) => {
+      state.isFetching = false;
+      state.user = action.payload.userCred;
+      state.error = action.payload.error;
+      console.log("State User :  ", state.user, "State Error : ", state.error);
     });
 
   },
 });
 
 export const userReducer = userSlice.reducer;
-// export const { loginStart, loginSuccess, loginFailure, logout } = userSlice.actions;
 export const userSelection = (state) => state.user;

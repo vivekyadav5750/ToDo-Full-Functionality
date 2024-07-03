@@ -4,6 +4,8 @@ import { userLogin, userSelection } from "../redux/User/UserReducer";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 
+import GoogleSignIn from "./google-sign-in";
+
 export default function LoginCard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,9 +33,9 @@ export default function LoginCard() {
   } , [user, error,navigate] );
 
   return (
-    <main className="flex items-center justify-center">
+    <main className="flex items-center justify-center ">
       {/* // login form */}
-      <div className="h-96 w-80 mt-20   space-y-4">
+      <div className="h-96 w-80 mt-20 space-y-4 ">
         <h1 className="text-5xl font-serif font-black text-customBlue">
           Sign In
         </h1>
@@ -67,7 +69,11 @@ export default function LoginCard() {
         <p className="font-semibold">
           <NavLink to="/signUp"> Or SignUp instead</NavLink>
         </p>
+
+        <GoogleSignIn />
+        
       </div>
+
     </main>
   );
 }
