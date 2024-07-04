@@ -6,7 +6,7 @@ export default function NoteItem({ sort }) {
   const { docs: todos } = useFirestore("todos");
 
   return (
-    <div className="w-2/3 min-h-80 bg-gray-400 shadow-md rounded-md p-4 ">
+    <div className="w-2/3 min-h-80 border-2 shadow-md rounded-md p-4 space-y-4">
       {todos
         .sort((a, b) =>
           sort

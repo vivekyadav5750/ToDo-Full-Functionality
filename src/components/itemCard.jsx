@@ -37,7 +37,7 @@ export default function ItemCard({ todo }) {
   }, [todo.title]);
 
   return (
-    <div className="w-full h-20 bg-gray-300 flex items-center justify-between p-4 rounded-md shadow-md">
+    <div className="w-full h-16 bg-gray-200 hover:shadow-lg hover:border-2 hover:bg-white  flex items-center justify-between p-4 rounded-md shadow-md">
       <div className="w-1/2">
         <h1 className="font-semibold text-xl">
           <input

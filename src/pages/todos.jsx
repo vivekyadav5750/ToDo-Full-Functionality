@@ -22,7 +22,7 @@ export default function Todos() {
   });
 
   return (
-    <div className="w-full flex flex-col bg-gray-500 items-center space-y-4 p-2 pb-8">
+    <div className="w-full flex flex-col bg-gray-100 items-center space-y-4 p-2 pb-8">
 
       <div className="w-full flex flex-row  ">
         <Sort sort={sort} setSort={setSort} />
