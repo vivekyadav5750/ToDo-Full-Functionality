@@ -21,14 +21,11 @@ export default function RegisterCard() {
     dispatch(userRegister(newUser));
   };
 
-  //useEffect for toast first attempt or changes in data
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-    else{
-      toast.success(`Registration Successfully ${user.name}` );
-      navigate("/")
+    if (user) {
+      navigate("/");
+    } else if (error) {
+      toast.error("Error : " + error);
     }
   }, [user, error, navigate]);
 

@@ -3,14 +3,25 @@ import { NavLink } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { VscSignIn, VscSignOut } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout, userSelection } from "../redux/User/UserReducer";
+import { userSelection } from "../redux/User/UserReducer";
+import { signOut } from "firebase/auth";
+import { auth } from "../Config/firebaseInit";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const { user } = useSelector(userSelection);
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    dispatch(userLogout());
+    signOut(auth)
+      .then(() => {
+        dispatch({ type: "user/setUser", payload: null });
+        toast.info("Logout Successfull",{autoClose:1000});
+        // toast.warning("Logout Successfull",{autoClose:1000});
+      })
+      .catch((error) => {
+        toast.error("Error : " + error.message);
+      });
   };
 
   return (

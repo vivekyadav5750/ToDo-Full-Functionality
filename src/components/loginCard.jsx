@@ -1,17 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { userLogin, userSelection } from "../redux/User/UserReducer";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 import GoogleSignIn from "./google-sign-in";
 
 export default function LoginCard() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, error } = useSelector(userSelection);
   console.log("Login User : ", user, "Login Error : ", error);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const Loginuser = {
@@ -19,18 +16,9 @@ export default function LoginCard() {
       password: e.target.password.value,
     };
 
-    dispatch(userLogin(Loginuser));  
+    dispatch(userLogin(Loginuser));
   };
 
-  //useEffect for toast first attempt or changes in data
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    } else {
-      toast.success(`Login Successfully `);
-      navigate("/");
-    } 
-  } , [user, error,navigate] );
 
   return (
     <main className="flex items-center justify-center ">
@@ -71,9 +59,7 @@ export default function LoginCard() {
         </p>
 
         <GoogleSignIn />
-        
       </div>
-
     </main>
   );
 }
